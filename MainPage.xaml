@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ControlMedicionPoso.MainPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="HeaderCellStyle" TargetType="Label">
+                <Setter Property="BackgroundColor" Value="BlueViolet"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="WidthRequest" Value="200"/>
+            </Style>
+            <Style x:Key="DataCellStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="WidthRequest" Value="200"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+
+            <Label
+                Text="Carga Archivos Excel"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level1" />
+
+            <Button x:Name="btnLoad" Text="Cargar Archivo" Clicked="OnLoadClicked"/>
+            <Button x:Name="btnSave" Text="Guardar" Clicked="OnSaveClicked" />
+
+            <Grid Padding="0" ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+                <Label Text="Fecha" Style="{StaticResource HeaderCellStyle}" Grid.Column="0"/>
+                <Label Text="pH" Style="{StaticResource HeaderCellStyle}" Grid.Column="1"/>
+                <Label Text="Cobre Disuelto" Style="{StaticResource HeaderCellStyle}" Grid.Column="2"/>
+                <Label Text="Solidos Totales Disueltos" Style="{StaticResource HeaderCellStyle}" Grid.Column="3"/>
+                <Label Text="Sulfato" Style="{StaticResource HeaderCellStyle}" Grid.Column="4"/>
+                <Label Text="Conductividad" Style="{StaticResource HeaderCellStyle}" Grid.Column="5"/>
+            </Grid>
+
+            <CollectionView x:Name="dataCollection">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="0" ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+                            <Label Text="{Binding Fecha}" Style="{StaticResource DataCellStyle}"  Grid.Column="0"/>
+                            <Label Text="{Binding pH}" Style="{StaticResource DataCellStyle}"  Grid.Column="1"/>
+                            <Label Text="{Binding CobreDisuelto}" Style="{StaticResource DataCellStyle}"  Grid.Column="2"/>
+                            <Label Text="{Binding SolidosTotalesDisueltos}" Style="{StaticResource DataCellStyle}"  Grid.Column="3"/>
+                            <Label Text="{Binding Sulfato}" Style="{StaticResource DataCellStyle}"  Grid.Column="4"/>
+                            <Label Text="{Binding Conductividad}" Style="{StaticResource DataCellStyle}"  Grid.Column="5"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
