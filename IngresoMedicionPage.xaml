@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ControlMedicionPoso.IngresoMedicionPage"
+             Title="Ingreso Medición">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="HeaderCellStyle" TargetType="Label">
+                <Setter Property="BackgroundColor" Value="BlueViolet"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="WidthRequest" Value="200"/>
+            </Style>
+            <Style x:Key="DataCellStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="WidthRequest" Value="200"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+
+            <DatePicker x:Name="fechaPicker" Format="dd-MM-yyyy"/>
+            <Entry x:Name="phEntry" Placeholder="pH" Keyboard="Numeric"/>
+            <Entry x:Name="cobreDisueltoEntry" Placeholder="Cobre Disuelto" Keyboard="Numeric"/>
+            <Entry x:Name="solidosTotalesDisueltosEntry" Placeholder="Solidos Totales Disueltos" Keyboard="Numeric"/>
+            <Entry x:Name="sulfatoEntry" Placeholder="Sulfato" Keyboard="Numeric"/>
+            <Entry x:Name="conductividadEntry" Placeholder="Conductividad" Keyboard="Numeric"/>
+            <Entry x:Name="nombreDocEntry" Placeholder="Nombre del Documento"/>
+            <Button Text="Guardar" Clicked="OnGuardarClicked"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

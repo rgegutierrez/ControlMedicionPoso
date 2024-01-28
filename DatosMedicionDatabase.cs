@@ -17,4 +17,10 @@ public class DatosMedicionDatabase
     }
 
     // ... otros métodos para manejar la base de datos ...
+
+    public Task<List<DatosMedicion>> GetItemsAsync()
+    {
+        return _database.Table<DatosMedicion>().ToListAsync();
+    }
+
 }

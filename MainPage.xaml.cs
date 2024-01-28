@@ -61,7 +61,13 @@ namespace ControlMedicionPoso
 
                     using var stream = await result.OpenReadAsync();
                     using var workbook = new XLWorkbook(stream);
-                    var worksheet = workbook.Worksheet(1);
+                    var worksheet = workbook.Worksheet("Base de Datos ");
+
+                    if (worksheet == null)
+                    {
+                        await DisplayAlert("Error", "La hoja 'Base de datos' no se encontró en el archivo Excel.", "OK");
+                        return;
+                    }
 
                     // Leer las dos primeras filas para nombres de variables y unidades
                     var variables = worksheet.Row(1).Cells().Select(c => c.Value.ToString()).ToList();
@@ -89,27 +95,24 @@ namespace ControlMedicionPoso
                     // Iterar por cada fila a partir de la tercera
                     for (int row = 3; row <= worksheet.RowsUsed().Count(); row++)
                     {
-                        var medicion = new DatosMedicion { Fecha = fechaActual, NombreDoc = fileName };
+                        var medicion = new DatosMedicion { NombreDoc = fileName };
 
                         foreach (var colIndex in indicesDeInteres)
                         {
                             var valor = worksheet.Cell(row, colIndex + 1).Value.ToString();
                             var variable = variables[colIndex];
 
-                            // Regex que coincide con espacios o los símbolos < o >
-                            string pattern = "[\\s<>]";
-
-                            string processedValue = Regex.Replace(valor, pattern, "");
-
-                            string dateString = "25-12-22"; // Ejemplo de una fecha
-                            string format = "dd-MM-yy"; // Formato que quieres verificar
-
-                            if (DateTime.TryParseExact(processedValue, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
+                            if (variable == "Fecha")
                             {
-                                medicion.Fecha = valor;
+                                medicion.Fecha = valor.Substring(0, 10); ;
                             }
                             else
                             {
+                                // Regex que coincide con espacios o los símbolos < o >
+                                string pattern = "[\\s<>]";
+
+                                string processedValue = Regex.Replace(valor, pattern, "");
+
                                 if (decimal.TryParse(processedValue, NumberStyles.Any, CultureInfo.GetCultureInfo("es-ES"), out decimal numberDecimal))
                                 {
                                     switch (variable)
@@ -138,6 +141,8 @@ namespace ControlMedicionPoso
                         mediciones.Add(medicion);
                     }
                 }
+
+                await DisplayAlert("Éxito", "Datos leidos con éxito", "OK");
             }
             catch (Exception ex)
             {
